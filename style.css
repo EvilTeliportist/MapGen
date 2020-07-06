@@ -1,0 +1,39 @@
+* {
+  box-sizing: border-box;
+  user-select: none;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+}
+
+#controls {
+    position: absolute;
+    text-align: center;
+    font-size: 24px;
+    padding: 5px;
+    background-color: #999999;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 100%;
+    padding-bottom: 10px;
+    user-select: none;
+}
+
+input {
+    font-size: 24px;
+    width: 80%;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#submit {
+    width: 80%;
+}
