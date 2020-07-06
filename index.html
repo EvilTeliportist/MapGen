@@ -10,16 +10,15 @@
     <div id='controls'>
         <p1>Controls</p1><br><br>
         <label>Resolution</label>
-        <input id='edge' type='number' value="7" max='20' min='0'></input>
-        <label>Vignette Filter</label>
-        <input id='vig' type='number' value="0" max='10' min='0'></input>
+        <input id='edge' type='number' value="8" max='20' min='0'></input>
         <label>Breakups</label>
         <input id='break' type='number' value="3" max='10' min='0'></input>
         <label>Sea Level</label>
         <input id='seaoff' type='range' value="100" max='255' min='0'></input>
-        <label>Zoom</label>
-        <input id='zoom' type='range' value="150" max='200' min='0'></input>
-        <input type="submit" id='submit'>
+        <label>Map Size (Exponential)</label>
+        <input id='size' type='number' value="2" max='10' min='0'></input>
+        <input type="submit" id='submit' value='Recalculate'>
+        <input type="button" id='seed' value='New Seed'>
     </div>
 </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

@@ -1,6 +1,6 @@
 class Map {
 
-    constructor(res, octaves, power, vig){
+    constructor(res, octaves, power, vig, seaoff, size){
         this.res = res;
         this.octaves = octaves;
         this.power = power;
@@ -8,39 +8,27 @@ class Map {
         this.scale = .007;
         this.BW = [];
         this.COLOR = [];
-        this.MOUNTAINS = [];
-        this.mountain_thresh = 50;
-        this.offx = 0;
-        this.offy = 0;
-        this.seaoff = 0;
+        this.offx = 500;
+        this.offy = 500;
+        this.seaoff = seaoff;
+        this.map_multi = size;
     }
 
     make_heightmap(){
 
         this.COLOR = [];
         this.BW = [];
-        this.MOUNTAINS = [];
 
-        for(var x = this.offx; x < w + this.offx; x++){
-            for(var y = this.offy; y < h + this.offy; y++){
+        for(var x = this.offx; x < w * this.map_multi + this.offx; x++){
+            for(var y = this.offy; y < h * this.map_multi + this.offy; y++){
 
                 var v = this.sumOctave(this.octaves, x, y, .5, this.scale / this.res);
-                v *= 255;
-                v *= this.vignette(x, y, this.vig)
+                v *= -255;
+                //v -= (255 * this.vignette(x, y, this.vig))
                 v = Math.max(-255, v);
 
                 this.BW.push([x,y,[v,v,v]])
 
-                var m = this.sumOctave(6, x, y, .3, .05 / this.res);
-                m *= 255;
-                m *= this.vignette(x, y, this.vig)
-                m = Math.max(-255, m);
-
-                if (m < this.mountain_thresh){
-                    m = 0;
-                }
-
-                this.MOUNTAINS.push([x,y,[m,m,m]])
             }
         }
     }
@@ -64,27 +52,26 @@ class Map {
     }
 
     vignette(x, y, harshness){
-        x += 100;
-        var temp = (x * y) / ((w / 2) * (h / 2));
-        temp *= ((w - x) * (h - y)) / ((w / 2) * (h / 2));
-        return temp**harshness
+        var dist = ((w / 2) - x)**2 + ((h / 2) - y)**2;
+        dist = Math.sqrt(dist);
+        var max = (w / 2)**2 + (h / 2)**2;
+        max = Math.sqrt(max)
+
+        return (dist / max) ** (1/harshness);
     }
 
-    draw(color){
+    draw(){
+        c.clearRect(0,0,w-200,h)
 
-        if (color == 'BW'){
-            for (var i = 0; i < this.BW.length; i++){
-                pixel(this.BW[i][0], this.BW[i][1], this.BW[i][2]);
-            }
-        } else if (color == 'MOUNTAINS'){
-            for (var i = 0; i < this.MOUNTAINS.length; i++){
-                pixel(this.MOUNTAINS[i][0], this.MOUNTAINS[i][1], this.MOUNTAINS[i][2]);
-            }
-        } else {
-            for (var i = 0; i < this.COLOR.length; i++){
-                pixel(this.COLOR[i][0], this.COLOR[i][1], this.COLOR[i][2]);
+        for (var x = this.offx; x < w + this.offx; x++){
+            for (var y = this.offy; y < h + this.offy; y++){
+                var index = (this.map_multi * h * x) + y;
+                var p = this.COLOR[index]
+                pixel(p[0] - this.offx, p[1] - this.offy, p[2]);
             }
         }
+
+        c.putImageData(pixels, 0, 0)
     }
 
     make_biomes(){
@@ -95,19 +82,17 @@ class Map {
         var sand = [227, 206, 175, 255];
         var grass = [120, 156, 112, 255];
         var desert = [219, 162, 105, 255];
-        var mountain = [255, 255, 255]
 
-        var sea_start = -100 + this.seaoff;
+        var sea_start = -30 + this.seaoff;
         var shallow_start = 0 + this.seaoff;
-        var sand_start = 10 + this.seaoff;
-        var grass_start = 30 + this.seaoff;
+        var sand_start = 4 + this.seaoff;
+        var grass_start = 20 + this.seaoff;
         var desert_start = 110 + this.seaoff;
 
-        for(var x = 0; x < w; x++){
-            for(var y = 0; y < h; y++){
+        for(var x = 0; x < w * this.map_multi; x++){
+            for(var y = 0; y < h * this.map_multi; y++){
 
-                var v = this.BW[(x * h) + y][2][0];
-                var m = this.MOUNTAINS[(x * h) + y][2][0]
+                var v = this.BW[(x * h * this.map_multi) + y][2][0];
                 var col = [0,0,0]
 
                 if (v >= -255 && v < sea_start){
@@ -124,17 +109,9 @@ class Map {
                     col = desert;
                 }
 
+
                 this.COLOR.push([x, y, col]);
             }
         }
-    }
-
-    changeValues(res, octaves, power, vig, seaoff, zoom){
-        this.res = res;
-        this.octaves = octaves;
-        this.power = power;
-        this.vig = vig;
-        this.seaoff = seaoff;
-        this.scale = .007 * zoom;
     }
 }

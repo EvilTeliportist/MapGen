@@ -37,3 +37,9 @@ input {
 #submit {
     width: 80%;
 }
+
+#seed {
+    position: absolute;
+    right: 10%;
+    bottom: 5px;
+}
