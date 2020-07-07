@@ -19,6 +19,8 @@ class Map {
         this.sand = [227, 206, 175, 255];
         this.grass = [120, 156, 112, 255];
         this.desert = [219, 162, 105, 255];
+
+        this.cities = []
     }
 
     make_heightmap(){
@@ -57,18 +59,10 @@ class Map {
         return value;
     }
 
-    vignette(x, y, harshness){
-        var dist = ((w / 2) - x)**2 + ((h / 2) - y)**2;
-        dist = Math.sqrt(dist);
-        var max = (w / 2)**2 + (h / 2)**2;
-        max = Math.sqrt(max)
-
-        return (dist / max) ** (1/harshness);
-    }
-
     draw(){
         c.clearRect(0,0,w-200,h)
 
+        // Draw Terrain
         for (var x = this.offx; x < w + this.offx; x++){
             for (var y = this.offy; y < h + this.offy; y++){
                 var index = (this.map_multi * h * x) + y;
@@ -78,6 +72,16 @@ class Map {
         }
 
         c.putImageData(pixels, 0, 0)
+
+        // Draw Cities
+        for (var i = 0; i < this.cities.length; i++){
+            x = this.cities[i].x;
+            y = this.cities[i].y;
+            if (x >= this.offx && x <= (w + this.offx) && y >= this.offy && y <= (h + this.offy)){
+                circle(x - this.offx, y - this.offy, 8, this.cities[i].color, "#666666", 5);
+            }
+        }
+
     }
 
     changeColors(deep, sea, shallow, sand, grass, desert){
@@ -123,5 +127,22 @@ class Map {
                 this.COLOR.push([x, y, col]);
             }
         }
+    }
+
+    add_city(city){
+        this.cities.push(city)
+    }
+
+    check_city_hover(x, y){
+        for (var i = 0; i < this.cities.length; i++){
+            var dx = Math.abs(x - this.cities[i].x - this.offx)
+            var dy = Math.abs(y - this.cities[i].y - this.offy)
+
+            if (dx + dy < 10){
+                return this.cities[i];
+            }
+        }
+
+        return null;
     }
 }

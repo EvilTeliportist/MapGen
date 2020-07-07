@@ -6,22 +6,12 @@
     <link rel='stylesheet' type="text/css" href='style.css'>
   </head>
   <body>
-    <canvas height='100' width='100'></canvas>
-    <div id='controls'>
-        <button class='control_label'>Controls</button>
-        <button class='colors_label'>Colors</button>
-        <br><br>
-        <label>Resolution</label>
-        <input id='edge' type='number' value="8" max='20' min='0'></input>
-        <label>Breakups</label>
-        <input id='break' type='number' value="3" max='10' min='0'></input>
-        <label>Sea Level</label>
-        <input id='seaoff' type='range' value="100" max='255' min='0'></input>
-        <label>Map Size (Exponential)</label>
-        <input id='size' type='number' value="2" max='10' min='0'></input>
-        <input type="submit" id='submit' value='Recalculate'>
-        <input type="button" id='seed' value='New Seed'>
+    <div id='loader'>
+      <div id='load'></div>
     </div>
+    <div id='add'>+</div>
+    <div id='text'>A</div>
+    <canvas id='canvas' height='0' width='0'></canvas>
     <div id='colors'>
         <button class='control_label'>Controls</button>
         <button class='colors_label'>Colors</button>
@@ -40,10 +30,26 @@
         <input id='desert' class='color_selector' type='color' value='#dba269'>
         <input id='reset' type='submit' value='Reset Colors'></button>
     </div>
+    <div id='controls'>
+        <button class='control_label'>Controls</button>
+        <button class='colors_label'>Colors</button>
+        <br><br>
+        <label>Resolution</label>
+        <input id='edge' type='number' value="8" max='20' min='0'></input>
+        <label>Breakups</label>
+        <input id='break' type='number' value="3" max='10' min='0'></input>
+        <label>Sea Level</label>
+        <input id='seaoff' type='range' value="100" max='255' min='0'></input>
+        <label>Map Size (Exponential)</label>
+        <input id='size' type='number' value="2" max='10' min='0'></input>
+        <input type="submit" id='submit' value='Recalculate'>
+        <input type="button" id='seed' value='New Seed'>
+    </div>
 </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src='helpers.js'></script>
   <script src='noise.js'></script>
+  <script src='city.js'></script>
   <script src='map.js'></script>
   <script src='main.js'></script>
   <!--<script src='anim.js'></script>-->

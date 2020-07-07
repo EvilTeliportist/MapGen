@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
   user-select: none;
+  outline: none;
 }
 
 html, body {
@@ -11,6 +12,7 @@ html, body {
 body {
   height: 100vh;
   width: 100vw;
+  background-color: #d1cdb2;
 }
 
 #controls, #colors {
@@ -18,13 +20,15 @@ body {
     text-align: center;
     font-size: 24px;
     padding: 5px;
-    background-color: #999999;
-    top: 0;
-    right: 0;
+    background-color: white;
+    top: 5%;
+    right: 2%;
     width: 200px;
-    height: 100%;
+    height: 90%;
     padding-bottom: 10px;
     user-select: none;
+    border-radius: 20px;
+    border: 2px solid #888888;
 }
 
 input {
@@ -32,18 +36,95 @@ input {
     width: 80%;
     margin-bottom: 10px;
     text-align: center;
+    border-radius: 10px;
+    border: 2px solid #888888;
 }
 
 #submit {
+    position: absolute;
     width: 80%;
+    bottom: 50px;
+    right: 10%;
+    transition: .3s;
 }
 
 #seed, #reset {
     position: absolute;
     right: 10%;
     bottom: 5px;
+    transition: .3s;
 }
 
 .control_label, .colors_label {
     font-size: 18px;
+    background-color: white;
+    border-radius: 10px;
+    border: 2px solid #888888;
+    transition: .3s;
+}
+
+.control_label:hover, .colors_label:hover, #seed:hover, #submit:hover, #reset:hover {
+    filter: brightness(90%);
+}
+
+#loader {
+    position: fixed;
+    width: 100%;
+    height:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#load {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#add, #text {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    text-align: center;
+    line-height: 30px;
+    background-color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    border: 2px solid #888888;
+    transition: .3s;
+    cursor: pointer;
+}
+
+#text {
+    top: 50px;
+}
+
+#add:hover {
+    filter: brightness(90%);
+    width: 40px;
+    height: 40px;
+    top: 5px;
+    left: 5px;
+    line-height: 40px;
+}
+
+#text:hover {
+    filter: brightness(90%);
+    width: 40px;
+    height: 40px;
+    top: 45px;
+    left: 5px;
+    line-height: 40px;
 }

@@ -8,52 +8,11 @@ var mouse_holding = false;
 hold_loc = [0,0]
 var xoff = 0;
 var yoff = 0;
+var adding_city = false;
+var cities = []
 
-
-
-function submit(){
-
-
-    c.clearRect(0, 0, w-200, h)
-
-    var edge = parseInt($("#edge").val());
-    var breaking = parseInt($("#break").val());
-    var vig = parseInt($("#vig").val());
-    var seaoff = parseInt($("#seaoff").val());
-    var size = parseInt($("#size").val());
-
-
-    map = new Map(10 - breaking, edge, 3, vig, seaoff - 100, size)
-    map.make_heightmap()
-    map.make_biomes()
-    map.offx = xoff;
-    map.offy = yoff;
-    map.draw()
-
-}
-
-submit();
-
-// -------- Click Functions ---------
-
-$("#submit").click(submit);
-
-$("#seed").click(function() {
-    noise.seed(Math.random());
-    submit();
-});
-
-$(".colors_label").click(function() {
-    $("#controls").hide();
-    $("#colors").show();
-});
-
-$(".control_label").click(function() {
-    $("#colors").hide();
-    $("#controls").show();
-});
-
-$(".color_selector").on('change', function() {
+// -------- Generation ---------
+function set_colors(){
     var deep = hexToRGB($("#deep").val());
     var sea = hexToRGB($("#sea").val());
     var shallow = hexToRGB($("#shallow").val());
@@ -64,11 +23,9 @@ $(".color_selector").on('change', function() {
     map.changeColors(deep, sea, shallow, sand, grass, desert);
     map.make_biomes()
     map.draw()
-});
+}
 
-$("#colors").hide();
-
-$("#reset").click(function() {
+function reset_colors(){
     $("#deep").val("#001763")
     $("#sea").val("#1948e3")
     $("#shallow").val("#2499d4")
@@ -86,7 +43,71 @@ $("#reset").click(function() {
     map.changeColors(deep, sea, shallow, sand, grass, desert);
     map.make_biomes()
     map.draw()
+}
+
+function generate(){
+
+    $("#canvas").hide();
+    $("#loader").show();
+
+    c.clearRect(0, 0, w-200, h)
+
+    var edge = parseInt($("#edge").val());
+    var breaking = parseInt($("#break").val());
+    var vig = parseInt($("#vig").val());
+    var seaoff = parseInt($("#seaoff").val());
+    var size = parseInt($("#size").val());
+
+    map = new Map(10 - breaking, edge, 3, vig, seaoff - 100, size)
+
+    map.make_heightmap()
+    set_colors()
+    map.make_biomes()
+    map.offx = xoff;
+    map.offy = yoff;
+    map.draw()
+
+    $("#canvas").show();
+    $("#loader").hide();
+
+}
+
+generate();
+
+
+// -------- Click Functions ---------
+$("#submit").click(generate);
+
+$("#seed").click(function() {
+    noise.seed(Math.random());
+    generate();
 });
+
+$(".colors_label").click(function() {
+    $("#controls").hide();
+    $("#colors").show();
+});
+
+$(".control_label").click(function() {
+    $("#colors").hide();
+    $("#controls").show();
+});
+
+$(".color_selector").on('change', set_colors)
+
+$("#colors").hide();
+
+$("#reset").click(reset_colors)
+
+$("#add").click(function() {
+    if (adding_city){
+        adding_city = false;
+        $("#canvas").css('cursor', 'default');
+    } else {
+        adding_city = true;
+        $("#canvas").css('cursor', 'cell');
+    }
+})
 
 // ------- Dynamics --------
 document.onkeydown = function(e) {
@@ -111,27 +132,35 @@ document.onkeydown = function(e) {
     }
 
     if (e.keyCode == '187'){
-        map.scale /= 1.1;
-        map.make_heightmap();
-        map.make_biomes();
-        map.offx = xoff;
-        map.offy = yoff;
-        map.draw();
+        // +
     }
 
     if (e.keyCode == '189'){
-        map.scale *= 1.1;
-        map.make_heightmap();
-        map.make_biomes();
-        map.offx = xoff;
-        map.offy = yoff;
-        map.draw();
+        // -
+    }
+
+    if (e.keyCode == '27'){
+        adding_city = false;
+        $("#canvas").css('cursor', 'default');
     }
 }
 
 document.onmousedown = function(e){
-    mouse_holding = true;
-    hold_loc = [e.clientX, e.clientY]
+    if (adding_city){
+        city = new City('none', e.clientX + map.offx, e.clientY + map.offy);
+        map.add_city(city);
+        adding_city = false;
+        $("#canvas").css('cursor', 'default');
+        map.draw();
+    } else {
+        var res = map.check_city_hover(e.clientX,  e.clientY)
+        if (res != null){
+            console.log(res)
+        } else {
+            mouse_holding = true;
+            hold_loc = [e.clientX, e.clientY]
+        }
+    }
 }
 
 document.onmouseup = function(){
