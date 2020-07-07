@@ -34,6 +34,8 @@ function submit(){
 
 submit();
 
+// -------- Click Functions ---------
+
 $("#submit").click(submit);
 
 $("#seed").click(function() {
@@ -41,7 +43,50 @@ $("#seed").click(function() {
     submit();
 });
 
+$(".colors_label").click(function() {
+    $("#controls").hide();
+    $("#colors").show();
+});
 
+$(".control_label").click(function() {
+    $("#colors").hide();
+    $("#controls").show();
+});
+
+$(".color_selector").on('change', function() {
+    var deep = hexToRGB($("#deep").val());
+    var sea = hexToRGB($("#sea").val());
+    var shallow = hexToRGB($("#shallow").val());
+    var sand = hexToRGB($("#sand").val());
+    var grass = hexToRGB($("#grass").val());
+    var desert = hexToRGB($("#desert").val());
+
+    map.changeColors(deep, sea, shallow, sand, grass, desert);
+    map.make_biomes()
+    map.draw()
+});
+
+$("#colors").hide();
+
+$("#reset").click(function() {
+    $("#deep").val("#001763")
+    $("#sea").val("#1948e3")
+    $("#shallow").val("#2499d4")
+    $("#sand").val("#e3ceaf")
+    $("#grass").val("#789c70")
+    $("#desert").val("#dba269")
+
+    var deep = hexToRGB($("#deep").val());
+    var sea = hexToRGB($("#sea").val());
+    var shallow = hexToRGB($("#shallow").val());
+    var sand = hexToRGB($("#sand").val());
+    var grass = hexToRGB($("#grass").val());
+    var desert = hexToRGB($("#desert").val());
+
+    map.changeColors(deep, sea, shallow, sand, grass, desert);
+    map.make_biomes()
+    map.draw()
+});
 
 // ------- Dynamics --------
 document.onkeydown = function(e) {
@@ -62,6 +107,24 @@ document.onkeydown = function(e) {
 
     if (e.keyCode == '40'){
         map.offy += move;
+        map.draw();
+    }
+
+    if (e.keyCode == '187'){
+        map.scale /= 1.1;
+        map.make_heightmap();
+        map.make_biomes();
+        map.offx = xoff;
+        map.offy = yoff;
+        map.draw();
+    }
+
+    if (e.keyCode == '189'){
+        map.scale *= 1.1;
+        map.make_heightmap();
+        map.make_biomes();
+        map.offx = xoff;
+        map.offy = yoff;
         map.draw();
     }
 }

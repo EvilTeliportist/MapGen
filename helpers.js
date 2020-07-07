@@ -65,3 +65,12 @@ function blend(color2, color1, min, max, value)
     var b = (color1[2] * percentage) + (color2[2] * (1-percentage))
     return [r,g,b]
 }
+
+function hexToRGB(hex){
+    hex = hex.replace('#','');
+    r = parseInt(hex.substring(0,2), 16);
+    g = parseInt(hex.substring(2,4), 16);
+    b = parseInt(hex.substring(4,6), 16);
+
+    return [r,g,b];
+}

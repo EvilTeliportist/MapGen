@@ -8,7 +8,9 @@
   <body>
     <canvas height='100' width='100'></canvas>
     <div id='controls'>
-        <p1>Controls</p1><br><br>
+        <button class='control_label'>Controls</button>
+        <button class='colors_label'>Colors</button>
+        <br><br>
         <label>Resolution</label>
         <input id='edge' type='number' value="8" max='20' min='0'></input>
         <label>Breakups</label>
@@ -19,6 +21,24 @@
         <input id='size' type='number' value="2" max='10' min='0'></input>
         <input type="submit" id='submit' value='Recalculate'>
         <input type="button" id='seed' value='New Seed'>
+    </div>
+    <div id='colors'>
+        <button class='control_label'>Controls</button>
+        <button class='colors_label'>Colors</button>
+        <br><br>
+        <label>Deep Sea</label>
+        <input id='deep' class='color_selector' type='color' value='#001763'>
+        <label>Sea</label>
+        <input id='sea' class='color_selector' type='color' value='#1948e3'>
+        <label>Shallow Sea</label>
+        <input id='shallow' class='color_selector' type='color' value='#2499d4'>
+        <label>Sand</label>
+        <input id='sand' class='color_selector' type='color' value='#e3ceaf'>
+        <label>Grass</label>
+        <input id='grass' class='color_selector' type='color' value='#789c70'>
+        <label>Desert</label>
+        <input id='desert' class='color_selector' type='color' value='#dba269'>
+        <input id='reset' type='submit' value='Reset Colors'></button>
     </div>
 </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

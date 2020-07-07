@@ -12,15 +12,21 @@ class Map {
         this.offy = 500;
         this.seaoff = seaoff;
         this.map_multi = size;
+
+        this.deep = [0, 23, 99, 255];
+        this.sea = [25, 72, 227, 255];
+        this.shallow = [36, 153, 212, 255];
+        this.sand = [227, 206, 175, 255];
+        this.grass = [120, 156, 112, 255];
+        this.desert = [219, 162, 105, 255];
     }
 
     make_heightmap(){
 
-        this.COLOR = [];
         this.BW = [];
 
-        for(var x = this.offx; x < w * this.map_multi + this.offx; x++){
-            for(var y = this.offy; y < h * this.map_multi + this.offy; y++){
+        for(var x = 0; x < w * this.map_multi; x++){
+            for(var y = 0; y < h * this.map_multi; y++){
 
                 var v = this.sumOctave(this.octaves, x, y, .5, this.scale / this.res);
                 v *= -255;
@@ -74,19 +80,23 @@ class Map {
         c.putImageData(pixels, 0, 0)
     }
 
+    changeColors(deep, sea, shallow, sand, grass, desert){
+        this.deep = deep;
+        this.sea = sea;
+        this.shallow = shallow;
+        this.sand = sand;
+        this.grass = grass;
+        this.desert = desert;
+    }
+
     make_biomes(){
 
-        var deep = [0, 39, 171, 255];
-        var sea = [25, 72, 227, 255];
-        var shallow = [66, 135, 245, 255];
-        var sand = [227, 206, 175, 255];
-        var grass = [120, 156, 112, 255];
-        var desert = [219, 162, 105, 255];
+        this.COLOR = []
 
-        var sea_start = -30 + this.seaoff;
-        var shallow_start = 0 + this.seaoff;
-        var sand_start = 4 + this.seaoff;
-        var grass_start = 20 + this.seaoff;
+        var sea_start = 40 + this.seaoff;
+        var shallow_start = 48 + this.seaoff;
+        var sand_start = 50 + this.seaoff;
+        var grass_start = 60 + this.seaoff;
         var desert_start = 110 + this.seaoff;
 
         for(var x = 0; x < w * this.map_multi; x++){
@@ -96,17 +106,17 @@ class Map {
                 var col = [0,0,0]
 
                 if (v >= -255 && v < sea_start){
-                    col = blend(deep, sea, min, sea_start, v)
+                    col = blend(this.deep, this.sea, min, sea_start, v)
                 } else if (v >= sea_start && v < shallow_start){
-                    col = blend(sea, shallow, sea_start, shallow_start, v)
+                    col = blend(this.sea, this.shallow, sea_start, shallow_start, v)
                 } else if (v >= shallow_start && v < sand_start){
-                    col = blend(shallow, sand, shallow_start, sand_start, v)
+                    col = blend(this.shallow, this.sand, shallow_start, sand_start, v)
                 } else if (v >= sand_start && v < grass_start){
-                    col = blend(sand, grass, sand_start, grass_start, v)
+                    col = blend(this.sand, this.grass, sand_start, grass_start, v)
                 } else if (v >= grass_start && v < desert_start){
-                    col = blend(grass, desert, grass_start, desert_start, v);
+                    col = blend(this.grass, this.desert, grass_start, desert_start, v);
                 } else {
-                    col = desert;
+                    col = this.desert;
                 }
 
 
