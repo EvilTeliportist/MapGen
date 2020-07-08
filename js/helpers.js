@@ -60,6 +60,8 @@ function pixelcolor(x, y){
 
 function blend(color2, color1, min, max, value){
     var percentage = (value - min) / (max - min);
+    percentage = Math.min(percentage, 1)
+    percentage = Math.max(0, percentage)
     var r = (color1[0] * percentage) + (color2[0] * (1-percentage))
     var g = (color1[1] * percentage) + (color2[1] * (1-percentage))
     var b = (color1[2] * percentage) + (color2[2] * (1-percentage))

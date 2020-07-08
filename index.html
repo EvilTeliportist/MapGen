@@ -3,18 +3,23 @@
   <head>
     <meta charset="utf-8">
     <title>Map Generator</title>
-    <link rel='stylesheet' type="text/css" href='style.css'>
+    <link rel='stylesheet' type="text/css" href='static/style.css'>
   </head>
   <body>
     <div id='loader'>
       <div id='load'></div>
     </div>
-    <div id='add'>+</div>
-    <div id='text'>A</div>
+    <img id='gear' class='tool' src='static/gear.png'></img>
+    <img id='add' class='tool'  src='static/house.png'></img>
+    <img id='hill' class='tool'  src='static/hill.png'></img>
+    <img id='biome' class='tool'  src='static/sun.png'></img>
+    <img id='info' class='tool'  src='static/info.png'></img>
+    <img id='save' class='tool'  src='static/save.png'></img>
     <canvas id='canvas' height='0' width='0'></canvas>
     <div id='colors'>
         <button class='control_label'>Controls</button>
         <button class='colors_label'>Colors</button>
+        <button class='exit'>X</button>
         <br><br>
         <label>Deep Sea</label>
         <input id='deep' class='color_selector' type='color' value='#001763'>
@@ -28,16 +33,19 @@
         <input id='grass' class='color_selector' type='color' value='#789c70'>
         <label>Desert</label>
         <input id='desert' class='color_selector' type='color' value='#dba269'>
+        <label>Forest</label>
+        <input id='forest' class='color_selector' type='color' value='#336e26'>
         <input id='reset' type='submit' value='Reset Colors'></button>
     </div>
     <div id='controls'>
         <button class='control_label'>Controls</button>
         <button class='colors_label'>Colors</button>
+        <button class='exit'>X</button>
         <br><br>
         <label>Resolution</label>
         <input id='edge' type='number' value="8" max='20' min='0'></input>
         <label>Breakups</label>
-        <input id='break' type='number' value="3" max='10' min='0'></input>
+        <input id='break' type='number' value="3" max='10' min='0'></input><br>
         <label>Sea Level</label>
         <input id='seaoff' type='range' value="100" max='255' min='0'></input>
         <label>Map Size (Exponential)</label>
@@ -47,10 +55,10 @@
     </div>
 </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src='helpers.js'></script>
-  <script src='noise.js'></script>
-  <script src='city.js'></script>
-  <script src='map.js'></script>
-  <script src='main.js'></script>
+  <script src='js/helpers.js'></script>
+  <script src='js/noise.js'></script>
+  <script src='js/city.js'></script>
+  <script src='js/map.js'></script>
+  <script src='js/main.js'></script>
   <!--<script src='anim.js'></script>-->
 </html>

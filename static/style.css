@@ -13,9 +13,11 @@ body {
   height: 100vh;
   width: 100vw;
   background-color: #d1cdb2;
+  overflow: hidden;
 }
 
 #controls, #colors {
+    display: none;
     position: absolute;
     text-align: center;
     font-size: 24px;
@@ -40,6 +42,16 @@ input {
     border: 2px solid #888888;
 }
 
+label {
+    margin-top: 3px;
+    margin-bottom: 3px;
+    font-size: 18px;
+}
+
+.color_selector {
+    margin-bottom: 3px;
+}
+
 #submit {
     position: absolute;
     width: 80%;
@@ -55,15 +67,15 @@ input {
     transition: .3s;
 }
 
-.control_label, .colors_label {
-    font-size: 18px;
+.control_label, .colors_label, .exit {
+    font-size: 17px;
     background-color: white;
     border-radius: 10px;
     border: 2px solid #888888;
     transition: .3s;
 }
 
-.control_label:hover, .colors_label:hover, #seed:hover, #submit:hover, #reset:hover {
+.control_label:hover, .colors_label:hover, .exit:hover, #seed:hover, #submit:hover, #reset:hover {
     filter: brightness(90%);
 }
 
@@ -84,6 +96,53 @@ input {
   height: 120px;
   animation: spin 2s linear infinite;
   margin: auto;
+  z-index: 6;
+}
+
+.tool {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    left: 10px;
+    background-color: white;
+    padding: 5px;
+    border-radius: 10px;
+    border: 3px solid #999999;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.tool:hover {
+    filter: brightness(90%);
+    transform: rotate(45deg);
+}
+
+.tool:focus {
+    background-color: #a6f3ff;
+}
+
+#gear {
+    top: 10px;
+}
+
+#add {
+    top: 60px;
+}
+
+#hill {
+    top: 110px;
+}
+
+#biome {
+    top: 160px;
+}
+
+#info {
+    top: 210px;
+}
+
+#save {
+    top: 260px;
 }
 
 @keyframes spin {
@@ -91,40 +150,14 @@ input {
   100% { transform: rotate(360deg); }
 }
 
-#add, #text {
-    width: 30px;
-    height: 30px;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    text-align: center;
-    line-height: 30px;
-    background-color: white;
-    border-radius: 10px;
-    font-weight: bold;
-    border: 2px solid #888888;
-    transition: .3s;
-    cursor: pointer;
+.cityname {
+    font-size: 24px;
+    border-bottom: 2px solid #c9c9c9;
+    margin-bottom: 5px;
 }
 
-#text {
-    top: 50px;
-}
-
-#add:hover {
-    filter: brightness(90%);
-    width: 40px;
-    height: 40px;
-    top: 5px;
-    left: 5px;
-    line-height: 40px;
-}
-
-#text:hover {
-    filter: brightness(90%);
-    width: 40px;
-    height: 40px;
-    top: 45px;
-    left: 5px;
-    line-height: 40px;
+.population {
+    text-align: left;
+    border-bottom: 2px solid #e9e9e9;
+    margin-bottom: 5px;
 }
