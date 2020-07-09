@@ -194,7 +194,7 @@ class Map {
         }
     }
 
-    add_city(city){
+    add_city(city)  {
         this.cities.push(city)
         this.cities[this.cities.length - 1].id = this.cities.length - 1;
     }
@@ -238,11 +238,16 @@ class Map {
         }
     }
 
-    elevate(x, y, h, radius){
-        for (var i = 0; i < this.BW.length; i++){
-            var d = distance(x, y, this.BW[i][0] - this.offx, this.BW[i][1] - this.offy);
-            if(d <= radius){
-                this.BW[i][2] += (1 - (d / radius)) * h;
+    elevate(x, y, s, r){
+
+        for (var i = 0; i < r*2; i++){
+            var start_index = ((h * this.map_multi) * (x + i - r + this.offx)) + y + this.offy;
+            for (var j = 0; j < r*2; j++){
+
+                var d = distance(x + this.offx, y + this.offy, this.BW[start_index + j - r][0], this.BW[start_index + j - r][1])
+                if (d < r){
+                    this.BW[start_index + j - (r)][2] += s * (1 - (d / r));
+                }
             }
         }
 
