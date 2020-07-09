@@ -13,10 +13,9 @@ body {
   height: 100vh;
   width: 100vw;
   background-color: #d1cdb2;
-  overflow: hidden;
 }
 
-#controls, #colors {
+#controls, #colors, #elev_controls, #biome_controls {
     display: none;
     position: absolute;
     text-align: center;
@@ -50,6 +49,8 @@ label {
 
 .color_selector {
     margin-bottom: 3px;
+    padding: 0px;
+    margin-top: 0px;
 }
 
 #submit {
@@ -67,7 +68,7 @@ label {
     transition: .3s;
 }
 
-.control_label, .colors_label, .exit {
+.exit {
     font-size: 17px;
     background-color: white;
     border-radius: 10px;
@@ -75,7 +76,7 @@ label {
     transition: .3s;
 }
 
-.control_label:hover, .colors_label:hover, .exit:hover, #seed:hover, #submit:hover, #reset:hover {
+.exit:hover, #seed:hover, #submit:hover, #reset:hover {
     filter: brightness(90%);
 }
 
@@ -125,24 +126,32 @@ label {
     top: 10px;
 }
 
-#add {
+#color-icon {
     top: 60px;
 }
 
-#hill {
+#add {
     top: 110px;
 }
 
-#biome {
+#hill {
     top: 160px;
 }
 
-#info {
+#biome {
     top: 210px;
 }
 
-#save {
+#pages {
     top: 260px;
+}
+
+#info {
+    bottom: 60px;
+}
+
+#save {
+    bottom: 10px;
 }
 
 @keyframes spin {

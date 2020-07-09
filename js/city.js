@@ -5,7 +5,7 @@ class City {
         this.x = x;
         this.y = y;
         this.color = '#FFFFFF'
-        this.pop = 'Population: 0';
+        this.pop = 'Population: 1000';
         this.desc = 'Description';
     }
 

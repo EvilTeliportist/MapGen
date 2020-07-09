@@ -5,6 +5,8 @@ var h = document.documentElement.clientHeight;
 canvas.width = w;
 canvas.height = h;
 var c = canvas.getContext("2d");
+c.textAlign = 'left';
+c.font = '24px Arial';
 
 
 // Util Vars
@@ -77,23 +79,13 @@ function hexToRGB(hex){
     return [r,g,b];
 }
 
-function scaleImageData(imageData, scale){
-    var scaled = ctx.createImageData(imageData.width * scale, imageData.height * scale);
-    var subLine = ctx.createImageData(scale, 1).data
-    for (var row = 0; row < imageData.height; row++) {
-        for (var col = 0; col < imageData.width; col++) {
-            var sourcePixel = imageData.data.subarray(
-                (row * imageData.width + col) * 4,
-                (row * imageData.width + col) * 4 + 4
-            );
-            for (var x = 0; x < scale; x++) subLine.set(sourcePixel, x*4)
-            for (var y = 0; y < scale; y++) {
-                var destRow = row * scale + y;
-                var destCol = col * scale;
-                scaled.data.set(subLine, (destRow * scaled.width + destCol) * 4)
-            }
-        }
-    }
+function distance(x1, y1, x2, y2){
+    return Math.sqrt((x1 - x2)**2 + (y1 - y2)**2);
+}
 
-    return scaled;
+function text(text, x, y, size, color){
+    var s = size || 24;
+    c.font = s.toString() + 'px Arial';
+    c.fillStyle = color || 'white';
+    c.fillText(text, x, y)
 }
